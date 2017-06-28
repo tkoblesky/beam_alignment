@@ -1,0 +1,160 @@
+\documentclass[12pt,oneside,openary]{article}
+\usepackage{graphicx}                                                                                                                                          
+%\usepackage[dvipdfmx]{graphicx}
+%\usepackage{enumerate}
+%\usepackage{mediabb}                                                                                                                                            
+%\usepackage{amssymb}
+%\usepackage{epstopdf}
+%\usepackage{ascmac}
+%\usepackage{float}
+%\usepackage{breqn}
+%\usepackage{comment}
+%\usepackage{hyperref}
+%\usepackage{framed}
+%\usepackage{color}
+\usepackage{amsmath}
+\usepackage{fullpage}
+%\usepackage{here}
+%\usepackage{fancyhdr}
+%\usepackage{lineno}
+%\pagestyle{fancyplain}
+
+\begin{document}
+\title{Derivation of Angle Dependence in Boost and Rotation}
+\author{Theo Koblesky}
+\maketitle
+%\email{s1420259@u.tsukuba.ac.jp}                                                                                                                                
+%\linenumbers
+
+%\begin{equation}
+For this derivation, I am using the natural units system (c = 1).
+\begin{equation}
+p_{blue} = (\sqrt{100^2+m_{proton}^2},100\sin(\theta_{blue}),0,100\cos(\theta_{blue})) 
+\end{equation}
+\begin{equation}
+p_{yellow} = (\sqrt{100^2+m_{proton}^2},100Sin(\theta_{yellow}+\pi),0,100Cos(\theta_{yellow}+\pi)) 
+\end{equation}
+Assuming $\theta_{blue} and \theta_{yellow}$ are small (of the order of 10s of mRad), we can reduce these components to
+\begin{equation}
+p_{blue} = (\sqrt{100^2+m_{proton}^2},100\theta_{blue},0,100)) 
+\end{equation}
+\begin{equation}
+p_{yellow} = (\sqrt{100^2+m_{proton}^2},-100\theta_{yellow},0,-100) 
+\end{equation}
+\begin{equation}
+p_{CMS} = (p_{blue}+p_{yellow})
+\end{equation}
+\begin{equation}
+v = p/E
+\end{equation}
+boost velocity vector:
+\begin{equation}
+v_{B} = (p_{xCMS},0,0)/E_{CMS}
+\end{equation}
+Small angle approximation and small mass limit:
+\begin{equation}
+v_{Bx}  = \frac{100(\theta_{blue}-\theta_{yellow})}{2\sqrt{100^2+m_{proton}^2}}\approx 0.5(\theta_{blue}-\theta_{yellow})
+\end{equation}
+\begin{equation}
+v_{Bz} = \frac{100(Cos(\theta_{blue})+Cos(\theta_{yellow}+\pi))}{2\sqrt{100^2+m_{proton}^2}}\approx 0.25(\theta_{yellow}^2-\theta_{blue}^2)
+\end{equation}
+Boost Matrix (for x and z):
+\[
+B=
+\begin{bmatrix}
+    \gamma & -\gamma v_{x} & 0  &-\gamma v_{z} \\
+    -\gamma v_{Bx} & 1+\frac{(\gamma-1)v_{Bx}^2}{v^2} & 0  & \frac{(\gamma-1)v_{Bx}v_{Bz}}{v^2} \\
+    0 & 0 & 1 & 0 \\
+    -\gamma v_{Bz} & \frac{(\gamma-1)v_{Bx}v_{Bz}}{v^2} & 0  & 1+\frac{(\gamma-1)v_{Bz}^2}{v^2}
+\end{bmatrix}
+\]
+For a given 4 momentum vector of a single particle, we have
+\begin{equation}
+p = (E,p_x,p_y,p_z).
+\end{equation}
+Boosted momentum in the limit that $\gamma$ = 1:
+\begin{equation}
+p_{x}\prime=-\gamma v_{Bx}E+p_x(1+\frac{(\gamma-1)v_{Bx}^2}{v^2})+p_z(\frac{(\gamma-1)v_{Bx}v_{Bz}}{v^2})\approx -v_{Bx}E+p_x
+\end{equation}
+\begin{equation}
+p_{z}\prime=-\gamma v_{Bz}E+p_z(1+\frac{(\gamma-1)v_{Bz}^2}{v^2})+p_x(\frac{(\gamma-1)v_{Bx}v_{Bz}}{v^2})\approx -v_{Bz}E+p_z
+\end{equation}
+Now to calculate the rotation angle after the boost (assuming $p_z\prime$ is much greater than $p_x\prime$):
+\begin{equation}
+\theta_{xz}=\arctan(\frac{p_{Bluex}\prime}{p_{Bluez}\prime})\approx \frac{p_{Bluex}\prime}{p_{Bluez}\prime}
+\end{equation}
+Rotation matrix:
+\[
+R=
+\begin{pmatrix}
+    Cos(\theta_{xz})  & -Sin(\theta_{xz}) \\
+     Sin(\theta_{xz})  & Cos(\theta_{xz})
+\end{pmatrix}
+\]
+\begin{equation}
+p_{x}\prime\prime = p_{x}\prime Cos(\theta_{xz})- p_{z}\prime Sin(\theta_{xz})\approx p_{x}\prime - p_z\prime \theta_{xz}
+\end{equation}
+\begin{equation}
+p_{z}\prime\prime = p_{x}\prime Sin(\theta_{xz})+ p_{z}\prime Cos(\theta_{xz})\approx p_{x}\prime \theta_{xz} + p_z\prime 
+\end{equation}
+Rewriting $p_x\prime$ in terms of $p_x$, we get
+\begin{equation}
+p_{x}\prime\prime = p_{x} - E v_{Bx} - (p_z - E v_{Bz}) \frac{p_{Bluex} - E_{Blue} v_{Bx}}{p_{Bluez} - E_{Blue} v_{Bz}}.
+\end{equation}
+Dropping higher order velocity terms, we get
+\begin{equation}
+p_{x}\prime\prime = p_{x} - E v_{Bx} - p_z  \frac{p^{Blue}_{x} - E_{Blue} v_{Bx}}{p_{Bluez}},
+\end{equation}
+and then rewriting the boost velocity in terms of the beam angle, we obtain
+\begin{equation}
+p_{x}\prime\prime = p_{x} - 0.5 E (\theta_{Blue}-\theta_{Yellow}) - \left(\frac{p_z p_{Bluex}}{p_{Bluez}}\right)+\frac{0.5 p_{z}E_{Blue}(\theta_{Blue}-\theta_{Yellow})}{p_{Bluez}}.
+\end{equation}
+Using the approximations $p_{Bluex}/p_{Bluez} \approx \theta_{blue}$ and $E_{Blue}/p_{Bluez} \approx 1$,
+we obtain
+\begin{equation}
+p_{x}\prime\prime = p_{x} -  0.5E(\theta_{Blue}-\theta_{Yellow}) - (p_z \theta_{Blue})+0.5 p_{z} (\theta_{Blue}-\theta_{Yellow}).
+\end{equation}
+If we define $F_{Blue} = 0.5(E+p_z)$
+and 
+$F_{Yellow} = 0.5(E-p_z)$,
+we obtain
+\begin{equation}
+p_{x}\prime\prime = p_{x} -\theta_{Blue}F_{Blue} - \theta_{Yellow}F_{Yellow}.
+\end{equation}
+For a charged pion at eta = -3.5 with pt = 250 MeV, E = 4.14 GeV and pz = -4.13 GeV/c, we get the numerical results
+$F_{Blue} = 0.00495$
+and 
+$F_{Yellow} = -4.14$.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.5\linewidth]{name.pdf}
+\caption{Diagram showing the relevant beam angles.}
+\label{fig:diagram1}
+\end{center}
+\end{figure}
+
+%We can set up the equivalent rotation using the yellow beam:
+%\begin{equation}
+%\theta_{xz}=ATan(\frac{p_{Yellowx}\prime}{p_{Yellowz}\prime})\approx \frac{p_{Yellowx}\prime}{p_{Yellowz}\prime}
+%\end{equation}
+%\[
+%R=
+%\begin{pmatrix}
+ %   Cos(\theta_{xz})  & Sin(\theta_{xz}) \\
+  %   -Sin(\theta_{xz})  & Cos(\theta_{xz})
+%\end{pmatrix}
+%\]
+%\begin{equation}
+%p_{x}\prime\prime = p_{x}\prime Cos(\theta_{xz}) +p_{z}\prime Sin(\theta_{xz})\approx p_{x}\prime + p_z\prime \theta_{xz}
+%\end{equation}
+%\begin{equation}
+%p_{z}\prime\prime = -p_{x}\prime Sin(\theta_{xz})+ p_{z}\prime Cos(\theta_{xz})\approx -p_{x}\prime \theta_{xz} + p_z\prime 
+%\end{equation}
+
+\end{document}
+
+%%
+%% End of file `nppp-template.tex'. 
+
+% LocalWords:  NN
